@@ -1,0 +1,196 @@
+\documentclass[11pt]{article}
+
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{hyperref}
+\geometry{margin=1in}
+
+\title{Residue-Class Tiling as a Finite Analogue for Sparse Feature Recovery}
+\author{Dan Hawkley}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We study feature recovery on a controlled finite system defined by Mod30 residue classes. Using a continuous embedding of integers constrained to residues coprime with 30, we compare non-negative matrix factorization (NMF) and top-k sparse autoencoders (SAEs). We introduce metrics for structural recovery, redundancy, and capacity utilization. While NMF achieves higher coverage and efficient use of components, SAEs produce sparse and interpretable features but leave substantial latent capacity unused or redundant. These results show that sparsity-induced interpretability does not guarantee efficient representation, even with known ground truth.
+\end{abstract}
+
+\section{Introduction}
+
+Understanding how models recover structure is difficult when ground truth is unknown. We construct a finite system where structure is explicit:
+
+\begin{itemize}
+\item integers mapped under modulo 30
+\item filtered to residues coprime with 30
+\item yielding 8 persistent residue classes
+\end{itemize}
+
+This provides a controlled testbed where:
+[
+\text{true features} = \text{residue lanes}
+]
+
+\section{Mod30 Residue Structure}
+
+Let:
+[
+R = {1,7,11,13,17,19,23,29}
+]
+
+These define the persistent lanes. We embed filtered integers into a continuous space.
+
+\section{Continuous Embedding}
+
+Each integer is mapped to:
+\begin{itemize}
+\item circular coordinates
+\item lane channels with local overlap
+\item additive noise
+\end{itemize}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/35_shared_mod30_embedding.png}
+\caption{Continuous embedding of Mod30 residue classes.}
+\end{figure}
+
+\section{Models}
+
+\subsection{NMF}
+
+[
+X \approx W H
+]
+
+Dense linear decomposition.
+
+\subsection{Sparse Autoencoder}
+
+[
+X \rightarrow Z \rightarrow \text{top-k} \rightarrow \hat{X}
+]
+
+Only $k$ latent units active per sample.
+
+\section{Metrics}
+
+\begin{itemize}
+\item Coverage: recovered lanes / total lanes
+\item Purity: alignment with residue classes
+\item Reconstruction error
+\item Redundancy: activations per lane
+\item Effective features: captured lanes / components
+\item Dead / redundant feature fractions
+\end{itemize}
+
+\section{Results}
+
+\subsection{Coverage vs Reconstruction}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.7\textwidth]{figures/36_nmf_vs_sae_coverage_vs_reconstruction.png}
+\caption{NMF vs SAE: coverage and reconstruction tradeoff.}
+\end{figure}
+
+NMF achieves higher reconstruction and coverage.
+
+\subsection{Sparsity vs Coverage}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.7\textwidth]{figures/37_nmf_vs_sae_sparsity_vs_coverage.png}
+\caption{Sparse activations vs structural recovery.}
+\end{figure}
+
+SAE enforces sparsity but reduces recovery.
+
+\subsection{Capacity Utilization}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/38_nmf_vs_sae_effective_dead_redundant.png}
+\caption{Effective features and dead/redundant capacity.}
+\end{figure}
+
+SAEs leave significant latent units unused.
+
+\subsection{Redundancy Tradeoff}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.7\textwidth]{figures/39_nmf_vs_sae_redundancy_vs_coverage.png}
+\caption{Redundancy vs coverage.}
+\end{figure}
+
+\subsection{Feature Alignment}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.45\textwidth]{figures/40_nmf_alignment_8_components.png}
+\includegraphics[width=0.45\textwidth]{figures/41_sae_alignment_L8_k1.png}
+\caption{Feature-to-lane alignment (NMF left, SAE right).}
+\end{figure}
+
+\subsection{Activation Patterns}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.45\textwidth]{figures/42_nmf_activation_matrix_8.png}
+\includegraphics[width=0.45\textwidth]{figures/43_sae_activation_matrix_L8_k1.png}
+\caption{Activation matrices (dense vs sparse).}
+\end{figure}
+
+\section{Main Result}
+
+[
+\text{sparsity} ;\Rightarrow; \text{interpretability} ;\text{but}; \text{inefficient capacity}
+]
+
+More precisely:
+
+\begin{quote}
+Dense factorization efficiently uses all components, while sparse autoencoders leave significant latent capacity unused or redundant even in overcomplete regimes.
+\end{quote}
+
+\section{Discussion}
+
+Key tradeoff:
+[
+\text{efficiency} ;\leftrightarrow; \text{interpretability}
+]
+
+Sparse models:
+\begin{itemize}
+\item improve clarity
+\item reduce completeness
+\end{itemize}
+
+\section{Conclusion}
+
+We introduced a finite Mod30 system for evaluating feature recovery and showed:
+
+\begin{itemize}
+\item NMF recovers structure efficiently
+\item SAEs produce interpretable but incomplete representations
+\item sparsity does not guarantee effective utilization
+\end{itemize}
+
+\section{Reproducibility}
+
+All results are generated via notebooks:
+
+\begin{verbatim}
+01_mod30_residue_manifold
+02_local_tiling_vs_global_capture
+03_sparse_feature_analogy
+04_mod30_nmf_baseline
+05_true_sparse_autoencoder
+06_nmf_vs_sae_recovery_comparison
+\end{verbatim}
+
+\end{document}
