@@ -1,4 +1,5 @@
 # src/mod30.py
+# finite constraint gate: residue filtering ≠ collapse to zero
 
 from math import gcd
 
