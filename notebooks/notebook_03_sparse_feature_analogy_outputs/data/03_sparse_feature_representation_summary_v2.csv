@@ -1,0 +1,4 @@
+representation,feature_count,captured_lanes,missed_lanes,coverage_fraction,mean_feature_activation,active_rows_fraction,dilution_index,total_activations,redundancy,captured_residues,missed_residues
+single global-style lane,1,1,7,0.125,0.03333333333333333,0.03333333333333333,1.0,10.0,10.0,[1],"[7, 11, 13, 17, 19, 23, 29]"
+eight one-hot local tiles,8,8,0,1.0,0.03333333333333333,0.26666666666666666,1.0,80.0,10.0,"[1, 7, 11, 13, 17, 19, 23, 29]",[]
+four grouped local tiles,4,8,0,1.0,0.06666666666666667,0.26666666666666666,0.5,80.0,10.0,"[1, 7, 11, 13, 17, 19, 23, 29]",[]
