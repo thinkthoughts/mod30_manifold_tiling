@@ -8,6 +8,7 @@
 \usepackage{float}
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage{url}
 
 \graphicspath{{figures/}}
 
@@ -32,7 +33,9 @@ interpretability does not guarantee efficient representation, even with known gr
 \section{Introduction}
 
 Understanding how models recover structure is difficult when ground truth is unknown. We construct
-a finite system where structure is explicit:
+a finite system where structure is explicit.
+
+This work is fully reproducible via an open notebook-based implementation \cite{mod30_repo}.
 
 \begin{itemize}
     \item integers mapped under modulo 30,
@@ -51,6 +54,7 @@ Let
 \[
     R = \{1,7,11,13,17,19,23,29\}.
 \]
+
 These define the persistent Mod30 lanes. We embed filtered integers into a continuous space and
 evaluate whether factorization and sparse-learning methods recover these lanes.
 
@@ -74,18 +78,22 @@ Each integer is mapped to:
 
 \subsection{Non-negative Matrix Factorization}
 
-NMF factorizes the continuous embedding matrix as
+Non-negative matrix factorization (NMF) provides parts-based representations \cite{lee1999nmf}.
+
 \[
     X \approx W H,
 \]
+
 where $W$ contains component activations and $H$ contains learned components.
 
 \subsection{Sparse Autoencoder}
 
-The top-$k$ sparse autoencoder is trained as
+Sparse representations are commonly studied in overcomplete coding frameworks \cite{olshausen1997sparse}.
+
 \[
     X \longrightarrow Z \longrightarrow \operatorname{top}\text{-}k(Z) \longrightarrow \widehat{X}.
 \]
+
 Only $k$ latent units remain active per sample after the top-$k$ mask.
 
 \section{Metrics}
@@ -145,8 +153,6 @@ SAEs leave significant latent units unused or redundantly allocated.
 \label{fig:redundancy}
 \end{figure}
 
-Redundancy separates efficient recovery from overlapping or diffuse feature allocation.
-
 \subsection{Feature Alignment}
 
 \begin{figure}[H]
@@ -154,73 +160,31 @@ Redundancy separates efficient recovery from overlapping or diffuse feature allo
 \begin{subfigure}{0.46\textwidth}
     \centering
     \includegraphics[width=\textwidth]{40_nmf_alignment_8_components.png}
-    \caption{NMF, 8 components}
-\end{subfigure}
-\hfill
-\begin{subfigure}{0.46\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{41_sae_alignment_L8_k1.png}
-    \caption{SAE, $L=8$, $k=1$}
-\end{subfigure}
-\caption{Feature-to-lane alignment for matched-capacity models.}
-\label{fig:alignment}
-\end{figure}
-
-\subsection{Activation Patterns}
-
-\begin{figure}[H]
-\centering
-\begin{subfigure}{0.46\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{42_nmf_activation_matrix_8.png}
     \caption{NMF}
 \end{subfigure}
 \hfill
 \begin{subfigure}{0.46\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{43_sae_activation_matrix_L8_k1.png}
+    \includegraphics[width=\textwidth]{41_sae_alignment_L8_k1.png}
     \caption{SAE}
 \end{subfigure}
-\caption{Activation matrices showing dense factorization vs. sparse latent activity.}
-\label{fig:activations}
+\caption{Feature-to-lane alignment comparison.}
 \end{figure}
 
 \section{Main Result}
 
-The core tradeoff is:
 \[
     \text{sparsity} \Longrightarrow \text{interpretability}
     \quad \text{but not necessarily} \quad
     \text{efficient capacity}.
 \]
 
-More precisely, dense factorization efficiently uses its components, while sparse autoencoders can
-leave significant latent capacity unused or redundant even in overcomplete regimes.
-
-\section{Discussion}
-
-The experiments isolate a finite version of the efficiency--interpretability tradeoff:
-\[
-    \text{efficiency} \longleftrightarrow \text{interpretability}.
-\]
-
-Sparse models can improve clarity while reducing completeness. In this Mod30 benchmark,
-interpretability must therefore be evaluated jointly with coverage, redundancy, and effective
-feature utilization.
-
-\section{Conclusion}
-
-We introduced a finite Mod30 system for evaluating feature recovery and showed:
-
-\begin{itemize}
-    \item NMF recovers structure efficiently.
-    \item SAEs produce interpretable but incomplete representations.
-    \item Sparsity does not guarantee effective utilization.
-\end{itemize}
+Dense factorization efficiently uses its components, while sparse autoencoders leave significant
+latent capacity unused or redundant.
 
 \section{Reproducibility}
 
-All results are generated via the following notebooks:
+All experiments, figures, and metrics are generated via publicly available notebooks:
 
 \begin{verbatim}
 01_mod30_residue_manifold
@@ -230,5 +194,16 @@ All results are generated via the following notebooks:
 05_true_sparse_autoencoder
 06_nmf_vs_sae_recovery_comparison
 \end{verbatim}
+
+The full implementation is available at:
+
+\begin{center}
+\url{https://github.com/thinkthoughts/mod30_manifold_tiling}
+\end{center}
+
+See also \cite{mod30_repo}.
+
+\bibliographystyle{unsrt}
+\bibliography{references}
 
 \end{document}
