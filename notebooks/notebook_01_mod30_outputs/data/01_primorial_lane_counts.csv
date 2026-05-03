@@ -1,0 +1,4 @@
+modulus,lane_count,interpretation
+30,8,coarse finite tiling
+210,48,finer primorial tiling
+2310,480,next refined primorial tiling
