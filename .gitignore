@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+.env/
+.envrc
+
+# Jupyter / Colab
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Figures / outputs (keep if you want reproducibility)
+# If you DO want figures versioned, comment these out
+outputs/
+results/
+figures/generated/
+
+# Large data
+*.csv
+*.npy
+*.npz
+
+# Latex build
+*.aux
+*.log
+*.out
+*.toc
+*.bbl
+*.blg
+*.synctex.gz
+
+# VSCode / IDE
+.vscode/
+.idea/
+
+# Mac temp
+*.swp
