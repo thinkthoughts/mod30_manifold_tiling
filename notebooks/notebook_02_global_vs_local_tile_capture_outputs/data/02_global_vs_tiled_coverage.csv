@@ -1,0 +1,3 @@
+detector,target_lanes,captured_lanes,missed_lanes,coverage_fraction,captured_residues,missed_residues
+single lane: residue 1,8,1,7,0.125,[np.int64(1)],"[7, 11, 13, 17, 19, 23, 29]"
+local tile union: 8 residues,8,8,0,1.0,"[1, 7, 11, 13, 17, 19, 23, 29]",[]
